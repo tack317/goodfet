@@ -83,7 +83,7 @@ void setbaud0(unsigned char rate){
 
 //! Set the baud rate of the second uart.
 void setbaud1(unsigned char rate){
-#ifdef useuart1
+#if useuart1 || enableuart1
   //Table 15-4, page 481 of 2xx Family Guide
   switch(rate){
   case 1://9600 baud
@@ -127,9 +127,9 @@ void msp430_init_uart(){
 
   UCA0CTL1 |= UCSSEL_2;                     // SMCLK
 
-  //UCA0BR0 = BAUD0EN;                        // 115200
+  //UCA0BR0 = BAUD0EN;                      // 115200
   //UCA0BR1 = BAUD1EN;
-  setbaud(5);//default baud, 115200
+  setbaud(5);                               //default baud, 115200
 
   UCA0MCTL = 0;                             // Modulation UCBRSx = 5
   UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
@@ -139,13 +139,16 @@ void msp430_init_uart(){
   //Interrupt is handled by target code, not by bootloader.
   //IE2 |= UCA0RXIE; //DO NOT UNCOMMENT
   
-  
-  #ifdef useuart1
-  // Serial 1 on P3.6, 3.7
-  P3SEL    |=  0xC0;
-  //UCA1CTL0 = 0x00;
+  #if useuart1 || enableuart1
+  // Serial1 on P3.6, P3.7
+  P3SEL |= BIT6 + BIT7;
+  P3DIR |= BIT6;
+
+  UCA1CTL0 = 0x00;
   UCA1CTL1 |=  UCSSEL_2;                     // SMCLK
-  setbaud1(5); //115200
+
+  setbaud1(5);                               //default baud, 115200
+
   UCA1MCTL  =  0;
   UCA1CTL1 &= ~UCSWRST;                      // Initialize USCI state machine
   #endif

@@ -82,7 +82,7 @@ ifeq ($(platform),tilaunchpad)
 libs= lib/$(platform).o lib/command.o lib/apps.o lib/msp430_serial.o
 #libs+=lib/setjmp.o
 else
-libs= lib/$(mcu).o lib/command.o lib/dco_calib.o lib/apps.o lib/msp430.o lib/arduino.o $(extralibs)
+libs= lib/$(mcu).o lib/command.o apps/rs232/rs232.o lib/dco_calib.o lib/apps.o lib/msp430.o lib/arduino.o $(extralibs)
 endif
 
 hdrs=

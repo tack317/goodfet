@@ -13,6 +13,7 @@
 #include "glitch.h"
 
 extern void avrdudeloop();
+extern void serialrelayloop();
 
 #if (platform == tilaunchpad)
 #include <setjmp.h>
@@ -129,6 +130,13 @@ int main(void){
   }
   #endif
   
+  //RS232 PathTrough loop. There's no end!
+  #ifdef enableuart1
+  while(1){
+	  serialrelayloop();
+  }
+  #endif
+
   //Command loop.  There's no end!
   while(1){
     //Magic 3
