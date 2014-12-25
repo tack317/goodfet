@@ -1,1 +1,9 @@
+*.o
 /client/*.pyc
+/firmware/include/builddate.h
+/firmware/goodfet
+/firmware/goodfet.hex
+/firmware/include/apps.h
+/firmware/include/config.h
+/firmware/lib/apps.c
+/firmware/info.txt
