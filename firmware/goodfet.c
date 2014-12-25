@@ -12,6 +12,8 @@
 #include "apps.h"
 #include "glitch.h"
 
+extern void avrdudeloop();
+
 #if (platform == tilaunchpad)
 #include <setjmp.h>
 jmp_buf warmstart;
@@ -120,6 +122,12 @@ int main(void){
   txstring(MONITOR,OK,"http://goodfet.sf.net/");
   //txstring(0xab,0xcd,"http://goodfet.sf.net/");
   
+  //ISP PathTrough loop. There's no end!
+  #ifdef enableavr
+  while(1){
+	  avrdudeloop();
+  }
+  #endif
   
   //Command loop.  There's no end!
   while(1){
